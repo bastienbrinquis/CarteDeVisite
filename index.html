@@ -11,7 +11,7 @@
         :root {
             --bsb-burgundy: #5E2137;
             --glass-bg: rgba(255, 255, 255, 0.05);
-            --glass-border: rgba(255, 255, 255, 0.2);
+            --glass-border: rgba(255, 255, 255, 0.25);
             --text-white: #ffffff;
             --text-grey: #a1a1a6;
         }
@@ -46,7 +46,7 @@
             width: 85px;
             margin-bottom: 35px;
             filter: brightness(0) invert(1);
-            opacity: 0.8;
+            opacity: 0.9;
         }
 
         h1 {
@@ -77,16 +77,11 @@
             display: flex;
             align-items: center;
             padding: 14px 18px;
-            background: rgba(255, 255, 255, 0.04);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.07);
+            border: 1px solid rgba(255, 255, 255, 0.15);
             border-radius: 18px;
             text-decoration: none;
             transition: all 0.3s ease;
-        }
-
-        .contact-tile:hover {
-            background: rgba(255, 255, 255, 0.08);
-            transform: translateY(-2px);
         }
 
         .contact-tile i {
@@ -100,9 +95,6 @@
             color: var(--text-white);
             font-size: 13px;
             font-weight: 400;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
         }
 
         .actions {
@@ -117,7 +109,7 @@
             text-decoration: none;
             font-weight: 600;
             font-size: 15px;
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transition: all 0.4s ease;
             border: none;
             cursor: pointer;
             display: flex; justify-content: center; align-items: center; gap: 10px;
@@ -126,21 +118,18 @@
         .btn-linkedin {
             background-color: #0077b5;
             color: white;
-            box-shadow: 0 10px 20px rgba(0, 119, 181, 0.2);
         }
 
-        /* CORRECTION DU BOUTON ENREGISTRER (Effet Verre Sombre) */
         .btn-glass {
-            background-color: rgba(255, 255, 255, 0.1); /* Légèrement plus foncé */
+            background-color: rgba(255, 255, 255, 0.12);
             color: #ffffff;
-            border: 1px solid rgba(255, 255, 255, 0.3); /* Bordure plus marquée */
+            border: 1.5px solid rgba(255, 255, 255, 0.4);
             backdrop-filter: blur(15px);
             -webkit-backdrop-filter: blur(15px);
         }
 
-        .btn-glass:hover {
-            background-color: rgba(255, 255, 255, 0.15);
-            border: 1px solid rgba(255, 255, 255, 0.5);
+        .btn-glass:active {
+            background-color: rgba(255, 255, 255, 0.2);
         }
 
     </style>
@@ -176,26 +165,41 @@
 
     <script>
         function downloadVCard() {
-            // Correction de la fiche contact pour une meilleure lecture sur smartphone
             const vCardData = [
                 "BEGIN:VCARD",
                 "VERSION:3.0",
-                "N:Brinquis;Bastien;;;", // Nom;Prénom
-                "TITLE:Bachelor 2",
-                "TEL;TYPE=CELL;VALUE=TEXT:+33768548853",
-                "EMAIL;TYPE=INTERNET:bastien.brinquis@bsb-education.com",
+                "REV:" + new Date().toISOString(),
+                "N;CHARSET=utf-8:Brinquis;Bastien;;;",
+                "FN;CHARSET=utf-8:Bastien Brinquis",
+                "ORG;CHARSET=utf-8:BSB - Burgundy School of Business",
+                "TITLE;CHARSET=utf-8:Bachelor 2",
+                "TEL;TYPE=CELL,VOICE:+33768548853",
+                "EMAIL;TYPE=INTERNET,WORK:bastien.brinquis@bsb-education.com",
                 "URL:https://www.linkedin.com/in/bastien-brinquis-021955241/",
                 "END:VCARD"
-            ].join("\n");
+            ].join("\r\n");
 
             const blob = new Blob([vCardData], { type: 'text/vcard;charset=utf-8' });
-            const url = window.URL.createObjectURL(blob);
-            const link = document.createElement('a');
-            link.href = url;
-            link.setAttribute('download', 'Bastien_Brinquis.vcf');
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
+            
+            // Pour iOS et Android, on utilise une méthode de lien temporaire
+            const filename = 'Bastien_Brinquis.vcf';
+            
+            if (window.navigator && window.navigator.msSaveOrOpenBlob) {
+                window.navigator.msSaveOrOpenBlob(blob, filename);
+            } else {
+                const url = window.URL.createObjectURL(blob);
+                const link = document.createElement('a');
+                link.href = url;
+                link.setAttribute('download', filename);
+                document.body.appendChild(link);
+                link.click();
+                
+                // On nettoie après un court délai pour laisser le temps au navigateur de réagir
+                setTimeout(() => {
+                    document.body.removeChild(link);
+                    window.URL.revokeObjectURL(url);
+                }, 100);
+            }
         }
     </script>
 
