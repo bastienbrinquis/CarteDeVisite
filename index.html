@@ -11,7 +11,7 @@
         :root {
             --bsb-burgundy: #5E2137;
             --glass-bg: rgba(255, 255, 255, 0.05);
-            --glass-border: rgba(255, 255, 255, 0.25);
+            --glass-border: rgba(255, 255, 255, 0.3);
             --text-white: #ffffff;
             --text-grey: #a1a1a6;
         }
@@ -81,7 +81,6 @@
             border: 1px solid rgba(255, 255, 255, 0.15);
             border-radius: 18px;
             text-decoration: none;
-            transition: all 0.3s ease;
         }
 
         .contact-tile i {
@@ -94,7 +93,6 @@
         .contact-tile span {
             color: var(--text-white);
             font-size: 13px;
-            font-weight: 400;
         }
 
         .actions {
@@ -120,16 +118,13 @@
             color: white;
         }
 
+        /* Bouton Enregistrer - Visibilité Maximale */
         .btn-glass {
-            background-color: rgba(255, 255, 255, 0.12);
+            background-color: rgba(255, 255, 255, 0.15);
             color: #ffffff;
-            border: 1.5px solid rgba(255, 255, 255, 0.4);
+            border: 2px solid rgba(255, 255, 255, 0.5); /* Bordure très nette */
             backdrop-filter: blur(15px);
             -webkit-backdrop-filter: blur(15px);
-        }
-
-        .btn-glass:active {
-            background-color: rgba(255, 255, 255, 0.2);
         }
 
     </style>
@@ -165,40 +160,33 @@
 
     <script>
         function downloadVCard() {
+            // Version ultra-compatible iOS
             const vCardData = [
                 "BEGIN:VCARD",
                 "VERSION:3.0",
-                "REV:" + new Date().toISOString(),
-                "N;CHARSET=utf-8:Brinquis;Bastien;;;",
-                "FN;CHARSET=utf-8:Bastien Brinquis",
-                "ORG;CHARSET=utf-8:BSB - Burgundy School of Business",
-                "TITLE;CHARSET=utf-8:Bachelor 2",
-                "TEL;TYPE=CELL,VOICE:+33768548853",
+                "N:Brinquis;Bastien;;;",
+                "FN:Bastien Brinquis",
+                "ORG:BSB - Burgundy School of Business",
+                "TITLE:Bachelor 2",
+                "TEL;TYPE=CELL,PREF:+33768548853",
                 "EMAIL;TYPE=INTERNET,WORK:bastien.brinquis@bsb-education.com",
                 "URL:https://www.linkedin.com/in/bastien-brinquis-021955241/",
                 "END:VCARD"
-            ].join("\r\n");
+            ].join("\r\n"); // iOS exige le retour chariot \r\n
 
             const blob = new Blob([vCardData], { type: 'text/vcard;charset=utf-8' });
-            
-            // Pour iOS et Android, on utilise une méthode de lien temporaire
             const filename = 'Bastien_Brinquis.vcf';
-            
-            if (window.navigator && window.navigator.msSaveOrOpenBlob) {
-                window.navigator.msSaveOrOpenBlob(blob, filename);
+
+            // Méthode de téléchargement
+            if (navigator.msSaveOrOpenBlob) {
+                navigator.msSaveOrOpenBlob(blob, filename);
             } else {
-                const url = window.URL.createObjectURL(blob);
                 const link = document.createElement('a');
-                link.href = url;
+                link.href = window.URL.createObjectURL(blob);
                 link.setAttribute('download', filename);
                 document.body.appendChild(link);
                 link.click();
-                
-                // On nettoie après un court délai pour laisser le temps au navigateur de réagir
-                setTimeout(() => {
-                    document.body.removeChild(link);
-                    window.URL.revokeObjectURL(url);
-                }, 100);
+                document.body.removeChild(link);
             }
         }
     </script>
