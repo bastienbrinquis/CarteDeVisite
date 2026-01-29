@@ -10,8 +10,8 @@
     <style>
         :root {
             --bsb-burgundy: #5E2137;
-            --glass-bg: rgba(255, 255, 255, 0.03);
-            --glass-border: rgba(255, 255, 255, 0.1);
+            --glass-bg: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.2);
             --text-white: #ffffff;
             --text-grey: #a1a1a6;
         }
@@ -26,11 +26,9 @@
             align-items: center;
             padding: 20px;
             background: #000;
-            /* Mesh Gradient plus profond */
             background: linear-gradient(135deg, #000000 0%, #2c0b16 45%, #120524 80%, #000000 100%);
         }
 
-        /* La Carte */
         .card {
             background: rgba(255, 255, 255, 0.05);
             backdrop-filter: blur(35px) saturate(160%);
@@ -68,7 +66,6 @@
             letter-spacing: 1px;
         }
 
-        /* NOUVEAU STYLE CONTACTS : Glass Tiles */
         .contact-grid {
             display: flex;
             flex-direction: column;
@@ -81,7 +78,7 @@
             align-items: center;
             padding: 14px 18px;
             background: rgba(255, 255, 255, 0.04);
-            border: 1px solid rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 18px;
             text-decoration: none;
             transition: all 0.3s ease;
@@ -108,7 +105,6 @@
             text-overflow: ellipsis;
         }
 
-        /* Boutons */
         .actions {
             display: flex;
             flex-direction: column;
@@ -127,22 +123,24 @@
             display: flex; justify-content: center; align-items: center; gap: 10px;
         }
 
-        .btn:hover { transform: scale(1.07); }
-        .btn:active { transform: scale(0.96); }
-
         .btn-linkedin {
             background-color: #0077b5;
             color: white;
             box-shadow: 0 10px 20px rgba(0, 119, 181, 0.2);
         }
 
-        /* Bouton Enregistrer en effet Verre */
+        /* CORRECTION DU BOUTON ENREGISTRER (Effet Verre Sombre) */
         .btn-glass {
-            background-color: rgba(255, 255, 255, 0.08);
-            color: var(--text-white);
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
+            background-color: rgba(255, 255, 255, 0.1); /* Légèrement plus foncé */
+            color: #ffffff;
+            border: 1px solid rgba(255, 255, 255, 0.3); /* Bordure plus marquée */
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+        }
+
+        .btn-glass:hover {
+            background-color: rgba(255, 255, 255, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.5);
         }
 
     </style>
@@ -150,7 +148,7 @@
 <body>
 
     <div class="card">
-        <img src="/logo.png" alt="Logo BSB" class="logo-bsb">
+        <img src="logo.png" alt="Logo BSB" class="logo-bsb">
 
         <h1>Bastien Brinquis</h1>
         <p class="role">Bachelor in Management<br>2ème année</p>
@@ -178,14 +176,16 @@
 
     <script>
         function downloadVCard() {
+            // Correction de la fiche contact pour une meilleure lecture sur smartphone
             const vCardData = [
                 "BEGIN:VCARD",
                 "VERSION:3.0",
+                "N:Brinquis;Bastien;;;", // Nom;Prénom
                 "FN:Bastien Brinquis",
                 "ORG:BSB - Burgundy School of Business",
                 "TITLE:Bachelor 2",
-                "TEL;TYPE=CELL:+33768548853",
-                "EMAIL:bastien.brinquis@bsb-education.com",
+                "TEL;TYPE=CELL;VALUE=TEXT:+33768548853",
+                "EMAIL;TYPE=INTERNET:bastien.brinquis@bsb-education.com",
                 "URL:https://www.linkedin.com/in/bastien-brinquis-021955241/",
                 "END:VCARD"
             ].join("\n");
