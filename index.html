@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bastien Brinquis - BSB</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bsb-burgundy: #5E2137;
+            --glass-bg: rgba(255, 255, 255, 0.03);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --text-white: #ffffff;
+            --text-grey: #a1a1a6;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-font-smoothing: antialiased; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            background: #000;
+            /* Mesh Gradient plus profond */
+            background: linear-gradient(135deg, #000000 0%, #2c0b16 45%, #120524 80%, #000000 100%);
+        }
+
+        /* La Carte */
+        .card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(35px) saturate(160%);
+            -webkit-backdrop-filter: blur(35px) saturate(160%);
+            width: 100%;
+            max-width: 380px;
+            border-radius: 40px;
+            padding: 50px 25px;
+            text-align: center;
+            border: 1px solid var(--glass-border);
+            box-shadow: 0 40px 80px rgba(0,0,0,0.6);
+        }
+
+        .logo-bsb {
+            width: 85px;
+            margin-bottom: 35px;
+            filter: brightness(0) invert(1);
+            opacity: 0.8;
+        }
+
+        h1 {
+            font-size: 28px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            letter-spacing: -0.8px;
+            color: var(--text-white);
+        }
+
+        .role {
+            font-size: 14px;
+            color: var(--text-grey);
+            margin-bottom: 40px;
+            font-weight: 300;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* NOUVEAU STYLE CONTACTS : Glass Tiles */
+        .contact-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 45px;
+        }
+
+        .contact-tile {
+            display: flex;
+            align-items: center;
+            padding: 14px 18px;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 18px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .contact-tile:hover {
+            background: rgba(255, 255, 255, 0.08);
+            transform: translateY(-2px);
+        }
+
+        .contact-tile i {
+            color: var(--text-white);
+            font-size: 16px;
+            width: 30px;
+            text-align: left;
+        }
+
+        .contact-tile span {
+            color: var(--text-white);
+            font-size: 13px;
+            font-weight: 400;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        /* Boutons */
+        .actions {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .btn {
+            padding: 18px;
+            border-radius: 20px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 15px;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: none;
+            cursor: pointer;
+            display: flex; justify-content: center; align-items: center; gap: 10px;
+        }
+
+        .btn:hover { transform: scale(1.07); }
+        .btn:active { transform: scale(0.96); }
+
+        .btn-linkedin {
+            background-color: #0077b5;
+            color: white;
+            box-shadow: 0 10px 20px rgba(0, 119, 181, 0.2);
+        }
+
+        /* Bouton Enregistrer en effet Verre */
+        .btn-glass {
+            background-color: rgba(255, 255, 255, 0.08);
+            color: var(--text-white);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="card">
+        <img src="https://via.placeholder.com/200x80/000000/FFFFFF?text=BSB+LOGO" alt="Logo BSB" class="logo-bsb">
+
+        <h1>Bastien Brinquis</h1>
+        <p class="role">Bachelor in Management<br>2ème année</p>
+
+        <div class="contact-grid">
+            <a href="mailto:bastien.brinquis@bsb-education.com" class="contact-tile">
+                <i class="fa-regular fa-envelope"></i> 
+                <span>bastien.brinquis@bsb-education.com</span>
+            </a>
+            <a href="tel:+33768548853" class="contact-tile">
+                <i class="fa-solid fa-mobile-screen"></i> 
+                <span>+33 7 68 54 88 53</span>
+            </a>
+        </div>
+
+        <div class="actions">
+            <a href="https://www.linkedin.com/in/bastien-brinquis-021955241/" target="_blank" class="btn btn-linkedin">
+                <i class="fa-brands fa-linkedin-in"></i> LinkedIn
+            </a>
+            <button onclick="downloadVCard()" class="btn btn-glass">
+                <i class="fa-solid fa-user-plus"></i> Enregistrer le contact
+            </button>
+        </div>
+    </div>
+
+    <script>
+        function downloadVCard() {
+            const vCardData = [
+                "BEGIN:VCARD",
+                "VERSION:3.0",
+                "FN:Bastien Brinquis",
+                "ORG:BSB - Burgundy School of Business",
+                "TITLE:Bachelor 2",
+                "TEL;TYPE=CELL:+33768548853",
+                "EMAIL:bastien.brinquis@bsb-education.com",
+                "URL:https://www.linkedin.com/in/bastien-brinquis-021955241/",
+                "END:VCARD"
+            ].join("\n");
+
+            const blob = new Blob([vCardData], { type: 'text/vcard;charset=utf-8' });
+            const url = window.URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.setAttribute('download', 'Bastien_Brinquis.vcf');
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+    </script>
+
+</body>
+</html>
